@@ -13,8 +13,8 @@ class albumPhotoEntity {
 }
 
 class albumEntity {
-  final int userId;
-  final int id;
+  final dynamic userId;
+  final dynamic id;
   final String title;
 
   const albumEntity(

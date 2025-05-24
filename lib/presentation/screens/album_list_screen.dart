@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lab4/domain/entity/albumEntity.dart';
 import 'package:lab4/presentation/bloc/photos/Bloc.dart';
 import 'package:lab4/presentation/bloc/photos/events.dart';
 import 'package:lab4/presentation/bloc/photos/state.dart';
-import 'album_detail_screen.dart';
 
 class AlbumListScreen extends StatelessWidget {
   const AlbumListScreen({super.key});
@@ -72,12 +72,7 @@ class AlbumListScreen extends StatelessWidget {
             title: Text(album.title),
             subtitle: Text('Album ID: ${album.id}'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AlbumDetailScreen(albumId: album.id),
-                ),
-              );
+              context.go('/album/${album.id}');
             },
           ),
         );

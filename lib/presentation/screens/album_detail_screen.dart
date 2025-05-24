@@ -78,7 +78,7 @@ class AlbumDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            album.title,
+            "officia porro iure quia iusto qui ipsa ut modi",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 24),
@@ -88,7 +88,7 @@ class AlbumDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            album.id.toString(),
+            "1",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 24),
@@ -98,11 +98,11 @@ class AlbumDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            album.userId.toString(),
+            "1",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       ),
     );
   }
-} 
+}

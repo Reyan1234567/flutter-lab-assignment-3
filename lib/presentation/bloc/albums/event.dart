@@ -3,7 +3,7 @@ abstract class albumEvent{
 }
 
 class FetchAlbum extends albumEvent{
-  final int id;
+  final dynamic id;
 
   FetchAlbum(this.id);
 }
