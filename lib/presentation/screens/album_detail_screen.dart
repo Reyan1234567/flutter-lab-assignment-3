@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/bloc/album_bloc.dart';
+import 'package:lab4/presentation/bloc/albums/event.dart';
+import '../bloc/albums/Bloc.dart';
+import '../bloc/albums/state.dart';
 
 class AlbumDetailScreen extends StatelessWidget {
   final int albumId;
@@ -13,14 +15,14 @@ class AlbumDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Album Details'),
       ),
-      body: BlocBuilder<AlbumBloc, AlbumState>(
+      body: BlocBuilder<albumBloc, AlbumState>(
         builder: (context, state) {
           if (state is AlbumInitial) {
-            context.read<AlbumBloc>().add(LoadAlbumDetails(albumId));
+            context.read<albumBloc>().add(FetchAlbum(albumId));
             return const Center(child: CircularProgressIndicator());
           } else if (state is AlbumLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is AlbumDetailsLoaded) {
+          } else if (state is AlbumLoaded) {
             return _buildAlbumDetails(context, state.album);
           } else if (state is AlbumError) {
             return Center(
@@ -34,7 +36,7 @@ class AlbumDetailScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<AlbumBloc>().add(LoadAlbumDetails(albumId));
+                      context.read<albumBloc>().add(FetchAlbum(albumId));
                     },
                     child: const Text('Retry'),
                   ),

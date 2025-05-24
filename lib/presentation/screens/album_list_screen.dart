@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/bloc/album_bloc.dart';
-import '../../data/models/album_model.dart';
+import 'package:lab4/domain/entity/albumEntity.dart';
+import 'package:lab4/presentation/bloc/photos/Bloc.dart';
+import 'package:lab4/presentation/bloc/photos/events.dart';
+import 'package:lab4/presentation/bloc/photos/state.dart';
 import 'album_detail_screen.dart';
 
 class AlbumListScreen extends StatelessWidget {
@@ -13,16 +15,16 @@ class AlbumListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Albums'),
       ),
-      body: BlocBuilder<AlbumBloc, AlbumState>(
+      body: BlocBuilder<PhotosBloc, PhotoState>(
         builder: (context, state) {
-          if (state is AlbumInitial) {
-            context.read<AlbumBloc>().add(LoadAlbums());
+          if (state is PhotosInitial) {
+            context.read<PhotosBloc>().add(FetchPhotos());
             return const Center(child: CircularProgressIndicator());
-          } else if (state is AlbumLoading) {
+          } else if (state is PhotosLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is AlbumsLoaded) {
-            return _buildAlbumList(context, state.albums);
-          } else if (state is AlbumError) {
+          } else if (state is PhotosLoaded) {
+            return _buildAlbumList(context, state.photos);
+          } else if (state is PhotosError) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +36,7 @@ class AlbumListScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<AlbumBloc>().add(LoadAlbums());
+                      context.read<PhotosBloc>().add(FetchPhotos());
                     },
                     child: const Text('Retry'),
                   ),
@@ -48,7 +50,7 @@ class AlbumListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAlbumList(BuildContext context, List<Album> albums) {
+  Widget _buildAlbumList(BuildContext context, List<albumPhotoEntity> albums) {
     return ListView.builder(
       itemCount: albums.length,
       itemBuilder: (context, index) {
@@ -56,9 +58,9 @@ class AlbumListScreen extends StatelessWidget {
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ListTile(
-            leading: album.thumbnailUrl != null
+            leading: album.url != null
                 ? Image.network(
-                    album.thumbnailUrl!,
+                    album.url!,
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,

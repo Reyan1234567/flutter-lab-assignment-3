@@ -1,40 +1,17 @@
-import 'package:equatable/equatable.dart';
+import '../../domain/entity/albumEntity.dart';
 
-class Album extends Equatable {
-  final int id;
-  final int userId;
-  final String title;
-  final String? thumbnailUrl;
-  final String? url;
+class AlbumPhotoModel extends albumPhotoEntity{
+  AlbumPhotoModel(super.albumId, super.id, super.title, super.url);
 
-  const Album({
-    required this.id,
-    required this.userId,
-    required this.title,
-    this.thumbnailUrl,
-    this.url,
-  });
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'] as int,
-      userId: json['userId'] as int,
-      title: json['title'] as String,
-      thumbnailUrl: json['thumbnailUrl'] as String?,
-      url: json['url'] as String?,
-    );
+  factory AlbumPhotoModel.fromJson(Map<String, dynamic> json){
+    return AlbumPhotoModel(json['albumId'], json['id'], json['title'], json['url']);
   }
+}
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'userId': userId,
-      'title': title,
-      'thumbnailUrl': thumbnailUrl,
-      'url': url,
-    };
+class AlbumModel extends albumEntity{
+  AlbumModel(super.userId, super.title, super.id);
+
+  factory AlbumModel.fromJson(Map<String, dynamic> json){
+    return AlbumModel(json['userId'], json['title'], json['id']);
   }
-
-  @override
-  List<Object?> get props => [id, userId, title, thumbnailUrl, url];
-} 
+}
